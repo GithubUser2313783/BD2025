@@ -247,7 +247,12 @@ HAVING AVG([Prix conseillé]) > 100
 -- -- Écrire la requête avec aggrégat en premier
 -- -- Écrire la condition sur l'aggrégat ensuite.
 
--- Votre code ici
+SELECT [Classe du produit],
+	   COUNT([ID produit]) NbrDeProduits
+FROM [dbo].[Produits]
+GROUP BY [Classe du produit]
+HAVING COUNT([ID produit]) > 57
+
 
 
 
