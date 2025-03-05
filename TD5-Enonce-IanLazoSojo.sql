@@ -20,7 +20,14 @@
 -- * Le numéro de commande
 -- * Le nombre de jours de retard
 
--- Votre code ici
+SELECT
+	[ID commande],
+	[Date d'expédition],
+	[Date de besoin],
+	[Montant commande],
+	[Numéro de commande],
+	DATEDIFF(day, [Date d'expédition], [Date de besoin]) AS JoursRetard
+FROM [dbo].[Commandes]
 
 
 
@@ -34,8 +41,15 @@
 -- •	Date d’expédition
 -- •	Commande expédiée
 
--- Votre code ici
-
+SELECT
+	[ID commande],
+	[Montant commande],
+	[Date d'expédition],
+	[Date de besoin],
+	[Numéro de commande],
+	[Commande expédiée]
+FROM [dbo].[Commandes]
+WHERE [Date d'expédition] < [Date de besoin] AND [Commande expédiée] < 1
 
 
 -- Requête 3
@@ -47,7 +61,15 @@
 -- •	Date de besoin
 -- •	Date d’expédition
 
--- Votre code ici
+SELECT
+	[ID commande],
+	[Montant commande],
+	[Date de besoin],
+	[Date d'expédition],
+	[Paiement reçu]
+FROM [dbo].[Commandes]
+WHERE [Date de besoin] > [Date d'expédition]  AND [Paiement reçu] = 0
+
 
 
 
@@ -60,7 +82,13 @@
 -- •	Le nombre de commandes
 -- •	Le total des ses commandes
 
--- Votre code ici
+SELECT
+	SUM([Montant commande]) TotalDesCommandes,
+	[ID client],
+	COUNT(DISTINCT[ID commande]) NbrDeCommandes
+FROM [dbo].[Commandes]
+GROUP BY [ID client]
+
 
 
 
@@ -72,8 +100,12 @@
 -- •	Le nombre de commandes
 -- •	Le chiffre d'affaires réalisé
 
--- Votre code ici
-
+SELECT
+	[ID employé],
+	COUNT(DISTINCT[ID commande]) NbrDeCommandes,
+	SUM([Montant commande]) TotalDesCommandes
+FROM [dbo].[Commandes]
+GROUP BY [ID employé]
 
 
 -- Requête 5
@@ -85,7 +117,14 @@
 -- *	Le pourcentage de la remise
 -- •	Le montant de la remise
 
--- Votre code ici
+SELECT
+	[Nom du client],
+	[Ventes de l'année dernière],
+	[Ventes de l'année dernière] * 0.05 Remise,
+	[Ventes de l'année dernière] - [Ventes de l'année dernière] * 0.05 MontantDeRemise
+FROM [dbo].[Clients]
+WHERE [Ventes de l'année dernière] <= 100000
+
 
 
 
@@ -99,8 +138,14 @@
 -- •	Seuil de réapprovisonnement
 -- •	Numéro de commande
 
--- Votre code ici
-
+SELECT 
+	[ID produit],
+	[Unités en commande],
+	[Unités en stock],
+	[Seuil de réapprovisionnement],
+	[Numéro de commande]
+FROM [dbo].[Achats]
+WHERE [Numéro de commande] IS NULL
 
 
 -- Requête 7
@@ -119,7 +164,15 @@
 -- •	Unités en commande
 -- •	Nouveau stock
 
--- Votre code ici
+SELECT 
+	[ID produit],
+	[Unités en stock],
+	[Seuil de réapprovisionnement],
+	[Unités en commande],
+	[Unités en stock] + [Unités en commande] NouveauStock
+FROM [dbo].[Achats]
+WHERE [Seuil de réapprovisionnement] > [Unités en stock]
+
 
 
 
@@ -132,7 +185,14 @@
 -- •	Nombre de commandes
 -- •	La Moyenne des commandes
 
--- Votre code ici
+SELECT
+	[Transporteur],
+	[ID commande],
+	[Montant commande]
+	[Date de besoin],
+	[Date d'expédition]
+FROM [dbo].[Commandes]
+WHERE [Date de besoin] < [Date d'expédition]
 
 
 
@@ -147,7 +207,14 @@
 -- •	Le seuil de réapprovisionnement
 -- •	
 
--- Votre code ici
+SELECT 
+	[ID produit],
+	[Unités en commande],
+	[Unités en stock],
+	[Seuil de réapprovisionnement],
+	[Numéro de commande]
+FROM [dbo].[Achats]
+WHERE [Seuil de réapprovisionnement] > [Unités en stock] AND [Numéro de commande] IS NULL
 
 
 
@@ -159,9 +226,12 @@
 -- •	Le nombre de ventes
 -- •	La moyenne des ventes
 
--- Votre code ici
-
-
+SELECT
+	DISTINCT[ID employé],
+	COUNT(DISTINCT[ID commande]) NombreDeVentes,
+	AVG([Montant commande]) MoyenneDesVentes
+FROM [dbo].[Commandes]
+GROUP BY [ID employé]
 
 -- Requête 11
 -- Créez une requête qui affiche les statistiques de commandes pour les produits valant plus de 100$.
@@ -171,15 +241,24 @@
 -- •	Quantité commandée par commande
 -- •	Le montant total de chaque commande
 
--- Votre code ici
+SELECT [ID commande],
+	   COUNT([ID commande]) NombreDeProduits,
+	   SUM([Quantité]) QuantitéCommandé,
+	   SUM([Quantité] * [Prix unitaire]) MontantTotal
+FROM [dbo].[Détails des commandes]
+WHERE [Prix unitaire] > 100
+GROUP BY [ID commande]
 
  
 
 -- Requête 12
 -- Modifiez la requête précédente pour afficher les 10 produits les plus rentables.
--- 
 
-
--- Votre code ici
-
+SELECT [ID commande],
+	   COUNT([ID commande]) NombreDeProduits,
+	   SUM([Quantité]) QuantitéCommandé,
+	   SUM([Quantité] * [Prix unitaire]) MontantTotal
+FROM [dbo].[Détails des commandes]
+WHERE [Prix unitaire] > 100
+GROUP BY [ID commande] 
 
