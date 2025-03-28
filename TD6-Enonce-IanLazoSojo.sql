@@ -102,7 +102,7 @@ ORDER BY [Unités en commande] DESC
 
 SELECT [Nom du produit],
 	   [Unités en commande]
-FROM [dbo].
+FROM [dbo].[Types de produit]
 JOIN [dbo].[Produits] ON [dbo].[Types de produit].[ID type de produit] = [dbo].[Produits].[ID type de produit]
 JOIN [dbo].[Achats] ON [dbo].[Produits].[ID produit] = [dbo].[Achats].[ID produit]
 ORDER BY [Unités en commande] DESC

@@ -188,6 +188,29 @@ SELECT
 -- ATTENTION, l'utilisation des opérateurs arithmétiques ' - ' et ' + ' avec les
 -- fonctions CAST et CONVERT
 
+SELECT GETDATE(),
+	   FORMAT(GETDATE(), 'MMMM','en-CA') MoisAnglaisCA,
+	   FORMAT(GETDATE(), 'MMMM','fr-CA') MoisFrancaisCA,
+	   FORMAT(GETDATE(), 'MMMM','en-US') MoisAnglaisUS,
+	   FORMAT(GETDATE(), 'MMMM','fr-fr') MoisAnglaisCA,
+	   FORMAT(GETDATE(), 'MMMM','es-es') MoisEspagnolES,
+
+	   FORMAT(12345.678, 'N','en-CA') NombreCA,
+	   FORMAT(12345.678, 'C','en-CA') NombreMonnaieCA,
+	   FORMAT(12345.678, 'C','fr-CA') NombreMonnaieCA,
+	   FORMAT(12345.678, 'C','fr-fr') NombreMonnaieCA,
+
+	   -- CAST
+	   CAST(GETDATE() AS DATE),
+	   CAST(123.45 AS int),
+	   CAST(123 AS decimal(5, 2)),
+
+
+	   -- CONVERT
+	   CONVERT(date, GETDATE()) ConvertDate,
+	   CONVERT(int, 123.45),
+	   CONVERT(decimal(5, 2), 123)
+
 
 
 
@@ -300,3 +323,34 @@ HAVING COUNT([ID produit]) > 57
 -- -- Écrire la condition sur l'aggrégat ensuite.
 
 -- Votre code ici
+
+
+
+--Requête 16
+--
+-- Votre code ici
+
+
+SELECT [Nom du client],
+	   [Titre],
+	   CASE WHEN Titre = 'M.' THEN 'M' ELSE 'F' END Gender,
+	   [Poste occupé],
+	   [Ventes de l'année dernière],
+	   CASE WHEN [Ventes de l'année dernière] < 50000 THEN 'PetitClient'
+			WHEN [Ventes de l'année dernière] BETWEEN 50000 AND 100000 THEN 'BonClient'
+			WHEN [Ventes de l'année dernière] BETWEEN 100000 AND 300000 THEN 'TrèsBonClient'
+			WHEN [Ventes de l'année dernière] > 300000 THEN 'VIPClient' 
+			END TypeClient,
+	   CASE WHEN [Ventes de l'année dernière] < 50000 THEN '2%'
+			WHEN [Ventes de l'année dernière] BETWEEN 50000 AND 100000 THEN '5%'
+			WHEN [Ventes de l'année dernière] BETWEEN 100000 AND 300000 THEN '7%'
+			WHEN [Ventes de l'année dernière] > 300000 THEN '10%' 
+			END Rabais,
+	   [Pays],
+	   CASE WHEN [Pays] = 'Canada' OR [Pays] LIKE '%rique' THEN 'Amérique du Nord'
+			WHEN [Pays] IN ('France', 'Italie', 'Suisse') THEN 'Europe'
+			WHEN [Pays] IN ('Chine', 'Japon', 'Singapour') THEN 'Asie'
+			WHEN [Pays] IN ('Senegal', 'Zimbabwe', 'Mali') THEN 'Afrique'
+			ELSE 'World' 
+			END Continent
+FROM [dbo].[Clients]
