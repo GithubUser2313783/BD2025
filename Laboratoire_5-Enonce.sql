@@ -22,7 +22,7 @@ USE master;
 -- Suppression de la base de données
 -- La commande DROP DATATBASE nomBase
 
-DROP DATABASE IF EXISTS Lab5;
+DROP DATABASE IF EXISTS lab5;
 
 
 -- Requête 1

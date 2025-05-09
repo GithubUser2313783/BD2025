@@ -58,11 +58,16 @@ Salaire (monétaire)
 -- Votre code ici 
 */
 
+USE master;
+GO
+
 DROP DATABASE IF EXISTS TD9;
 
 CREATE DATABASE TD9;
+GO
 
 USE TD9;
+
 
 DROP TABLE IF EXISTS tblEmployes;
 
@@ -313,47 +318,44 @@ VALUES (1, 'Gaia', 'Shelby', '1999-03-01', 200);
 INSERT INTO tblProjets (ProjetID, NomProjet, DateDebut, DateFin, ChefProjetID)
 VALUES (1, 'Animal Sanctuary', 'Shelby', '1999-03-01', 200);
 
-CREATE TABLE tblProjets(
-	ProjetID int PRIMARY KEY,
-	NomProjet nvarchar(30),
-	DateDebut Date,
-	DateFin Date,
-	ChefProjetID int FOREIGN KEY(ChefProjetID) REFERENCES tblEmployes(EmpID)
-);
 
 -- Insertion dans la table tblClients
 -- Votre code ici
 
-
-
+INSERT INTO tblClients (ClientID, NomClient, Adresse, Email, Telephone)
+VALUES (1, 'John', '123 Canadian Street', 'johnL@gmail.com', '514-602-1450');
 
 -- Insertion dans la table tblProduits
 -- Votre code ici
 
-
-
+INSERT INTO tblProduits (ProduitID, NomProduit, ProduitDescription, PrixUnitaire, StockDisponible)
+VALUES (1, 'Fish Food', 'Warning: May contain nuts.', 5.99, 50)
 
 -- Insertion dans la table tblCommandes
 -- Votre code ici
 
-
+INSERT INTO tblCommandes (CommandeID, DateCommande, ClientID)
+VALUES (1, '2000-01-01', 1);
 
 
 -- Insertion dans la table tblArticlesCommandes
 -- Votre code ici
 
-
-
+INSERT INTO tblArticlesCommandes (ArticleCommande, CommandeID, ProduitID, Quantité, PrixUnitaire)
+VALUES (1, 1, 1, 10, 5.99);
 
 -- Insertion dans la table tblCours
 -- Votre code ici
 
-
+INSERT INTO tblCours (CoursID, NomCours, ProfesseurID, HeureDebut, HeureFin)
+VALUES (1, 'Botanical Science', 1, '12:00', '00:00');
 
 
 -- Insertion dans la table tblEtudiants
 -- Votre code ici
 
+INSERT INTO tblEtudiants (EtudiantID, NomEtudiant, PrenomEtudiant, DateNaissance, Adresse)
+VALUES (0001, Aiden, )
 
 
 
